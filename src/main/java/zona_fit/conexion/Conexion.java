@@ -8,8 +8,8 @@ public class Conexion {
         Connection conexion = null;
         String baseDatos = "zona_fit_db";
         String url = "jdbc:mysql://localhost:3306/" + baseDatos;
-        String usuario = "root";
-        String password = "admin";
+        String usuario = "*******";
+        String password = "*******";
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexion = DriverManager.getConnection(url, usuario, password);
