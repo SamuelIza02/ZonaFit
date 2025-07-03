@@ -73,6 +73,27 @@ public class ClienteDAO implements IClienteDAO{
 
     @Override
     public boolean agregarCliente(Cliente cliente) {
+        PreparedStatement ps;
+        Connection con = getConexion();
+        String sql = "INSERT INTO cliente (nombre, apellido, membresia) VALUES (?, ?, ?)";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setInt(3, cliente.getMembresia());
+            ps.execute();
+            return true;
+
+        }catch (Exception e){
+            System.out.println("Error al agregar cliente: " + e.getMessage());
+        }
+        finally {
+            try{
+                con.close();
+            }catch (Exception e){
+                System.out.println("Error al cerrar la conexion: " + e.getMessage());
+            }
+        }
         return false;
     }
 
@@ -96,14 +117,16 @@ public class ClienteDAO implements IClienteDAO{
 //        clientes.forEach(System.out::println);
 
         //Prueba Buscar Por ID
-        System.out.println("*** Buscar Cliente Por ID ***");
-        Cliente cliente1 = new Cliente(2);
-        System.out.println("Cliente antes de la busqueda: " + cliente1);
-        boolean encontrado = clienteDAO.buscarClientePorId(cliente1);
-        if (encontrado){
-            System.out.println("Cliente despues de la busqueda: " + cliente1);
-        }else{
-            System.out.println("Cliente no encontrado" + cliente1.getId());
-        }
+//        System.out.println("*** Buscar Cliente Por ID ***");
+//        Cliente cliente1 = new Cliente(3);
+//        System.out.println("Cliente antes de la busqueda: " + cliente1);
+//        boolean encontrado = clienteDAO.buscarClientePorId(cliente1);
+//        if (encontrado){
+//            System.out.println("Cliente despues de la busqueda: " + cliente1);
+//        }else{
+//            System.out.println("Cliente no encontrado: " + cliente1.getId());
+//        }
+
+        //
     }
 }
