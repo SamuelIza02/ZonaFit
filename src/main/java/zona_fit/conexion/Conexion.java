@@ -18,4 +18,13 @@ public class Conexion {
         }
         return conexion;
     }
+
+    public static void main(String[] args) {
+        Connection conexion = Conexion.getConexion();
+        if (conexion != null){
+            System.out.println("Conexion exitosa: " + conexion);
+        }else {
+            System.out.println("Error al conectarse");
+        }
+    }
 }
