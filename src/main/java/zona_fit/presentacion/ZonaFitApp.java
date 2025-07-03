@@ -44,7 +44,7 @@ public class ZonaFitApp {
         boolean salir = false;
         switch (opcion){
             case 1 -> listarClientes(clienteDAO);
-            case 2 -> buscarClientePorId(consola);
+            case 2 -> buscarClientePorId(consola, clienteDAO);
             case 3 -> agregarCliente(consola, clienteDAO);
             case 4 -> modificarCliente(clienteDAO, consola);
             case 5 -> eliminarCliente(clienteDAO, consola);
@@ -63,8 +63,7 @@ public class ZonaFitApp {
         clientes.forEach(System.out::println);
     }
 
-    private static void buscarClientePorId(Scanner consola){
-        IClienteDAO clienteDAO = new ClienteDAO();
+    private static void buscarClientePorId(Scanner consola, IClienteDAO clienteDAO){
         System.out.println("*** Buscar Cliente Por ID ***");
         System.out.print("Ingrese el ID del cliente: ");
         int id = Integer.parseInt(consola.nextLine());
