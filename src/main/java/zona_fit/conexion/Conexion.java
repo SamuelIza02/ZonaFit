@@ -19,8 +19,8 @@ public class Conexion {
         // Configuración de la base de datos
         String baseDatos = "zona_fit_db";
         String url = "jdbc:mysql://localhost:3306/" + baseDatos;
-        String usuario = "root";
-        String password = "admin";
+        String usuario = "*******";
+        String password = "*******";
         
         try{
             // Cargar el driver de MySQL
