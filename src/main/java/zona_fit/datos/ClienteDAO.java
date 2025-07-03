@@ -99,6 +99,27 @@ public class ClienteDAO implements IClienteDAO{
 
     @Override
     public boolean modificarCliente(Cliente cliente) {
+        PreparedStatement ps;
+        Connection con = getConexion();
+        String sql = "UPDATE cliente SET nombre=?, apellido=?, membresia=? WHERE id = ?";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setInt(3, cliente.getMembresia());
+            ps.setInt(4, cliente.getId());
+            ps.execute();
+            return true;
+        }catch (Exception e){
+            System.out.println("Error al modificar cliente: " + e.getMessage());
+        }
+        finally {
+            try{
+                con.close();
+            }catch (Exception e){
+                System.out.println("Error al cerrar la conexion: " + e.getMessage());
+            }
+        }
         return false;
     }
 
@@ -109,12 +130,6 @@ public class ClienteDAO implements IClienteDAO{
 
     public static void main(String[] args) {
         IClienteDAO clienteDAO = new ClienteDAO();
-
-        //Prueba Listar Clientes
-//        System.out.println("*** Listar Clientes ***");
-//        IClienteDAO clienteDAO = new ClienteDAO();
-//        List<Cliente> clientes = clienteDAO.listarClientes();
-//        clientes.forEach(System.out::println);
 
         //Prueba Buscar Por ID
 //        System.out.println("*** Buscar Cliente Por ID ***");
@@ -127,6 +142,29 @@ public class ClienteDAO implements IClienteDAO{
 //            System.out.println("Cliente no encontrado: " + cliente1.getId());
 //        }
 
-        //
+        //Prueba Agregar Cliente
+//        System.out.println("*** Agregar Cliente ***");
+//        Cliente cliente2 = new Cliente("Daniel", "Ortiz", 300);
+//        boolean agregado = clienteDAO.agregarCliente(cliente2);
+//        if (agregado){
+//            System.out.println("Cliente agregado: " + cliente2);
+//        }else{
+//            System.out.println("Cliente no agregado: " + cliente2);
+//        }
+        //Prueba Listar Clientes
+        System.out.println("*** Listar Clientes ***");
+        List<Cliente> clientes = clienteDAO.listarClientes();
+        clientes.forEach(System.out::println);
+
+        //Prueba Modificar Cliente
+//        System.out.println("*** Modificar Cliente ***");
+//        Cliente modificarCliente = new Cliente(5, "Carlos Daniel", "Ortiz", 300);
+//        boolean modificado = clienteDAO.modificarCliente(modificarCliente);
+//        if (modificado){
+//            System.out.println("Cliente modificado: " + modificarCliente);
+//        }else{
+//            System.out.println("Cliente no modificado: " + modificarCliente);
+//        }
+
     }
 }
