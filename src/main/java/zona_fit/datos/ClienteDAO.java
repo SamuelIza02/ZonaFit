@@ -125,6 +125,24 @@ public class ClienteDAO implements IClienteDAO{
 
     @Override
     public boolean eliminarCliente(Cliente cliente) {
+        PreparedStatement ps;
+        Connection con = getConexion();
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, cliente.getId());
+            ps.execute();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error al eliminar cliente: " + e.getMessage());
+        }
+        finally {
+            try{
+                con.close();
+            }catch (Exception e){
+                System.out.println("Error al cerrar la conexion: " + e.getMessage());
+            }
+        }
         return false;
     }
 
@@ -151,10 +169,6 @@ public class ClienteDAO implements IClienteDAO{
 //        }else{
 //            System.out.println("Cliente no agregado: " + cliente2);
 //        }
-        //Prueba Listar Clientes
-        System.out.println("*** Listar Clientes ***");
-        List<Cliente> clientes = clienteDAO.listarClientes();
-        clientes.forEach(System.out::println);
 
         //Prueba Modificar Cliente
 //        System.out.println("*** Modificar Cliente ***");
@@ -165,6 +179,21 @@ public class ClienteDAO implements IClienteDAO{
 //        }else{
 //            System.out.println("Cliente no modificado: " + modificarCliente);
 //        }
+
+        //Prueba Eliminar Cliente
+        System.out.println("*** Eliminar Cliente ***");
+        Cliente eliminarCliente = new Cliente(5);
+        boolean eliminado = clienteDAO.eliminarCliente(eliminarCliente);
+        if (eliminado){
+            System.out.println("Cliente eliminado: " + eliminarCliente);
+        }else{
+            System.out.println("Cliente no eliminado: " + eliminarCliente);
+        }
+
+        //Prueba Listar Clientes
+        System.out.println("*** Listar Clientes ***");
+        List<Cliente> clientes = clienteDAO.listarClientes();
+        clientes.forEach(System.out::println);
 
     }
 }
